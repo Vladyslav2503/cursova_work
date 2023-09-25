@@ -1,20 +1,15 @@
 import {Navigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux'
 import { useAuth } from 'hooks/use-auth';
-import {removeUser} from 'store/slices/userSlice'
-
+import Navbar from 'components/Navbar';
+import HeroBanner from 'components/HeroBanner';
 const HomePage = () => {
-    const dispatch = useDispatch();
 
-    const {isAuth, email} = useAuth();
+    const {isAuth} = useAuth();
 
     return isAuth ? (
         <div>
-            <h1>Welcome</h1>
-
-            <button
-                onClick={()=> dispatch(removeUser())}
-            >Log out from {email}</button>
+            <Navbar/>     
+            <HeroBanner/>              
         </div>
     ) : (
         <Navigate to="/login" />

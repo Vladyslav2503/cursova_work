@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,11 +18,52 @@ import { setUser } from 'store/slices/userSlice';
 
 const defaultTheme = createTheme();
 
+    
+
+    
+
+
+
+
+
+
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const push = useNavigate();
+  const [emailDirty, setEmailDirty] = useState(false)
+  const [passwordDirty, setPasswordDirty] = useState(false)
+  const [formValid, setFormValid] = useState(false)
+  
+
+  useEffect(() => {
+    if (emailDirty || passwordDirty) {
+        setFormValid(false)
+    } else {
+        setFormValid(true)
+    }
+}, [emailDirty, passwordDirty])
+
+const emailHandler = (e) => {
+    setEmail(e.target.value)
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    if (!re.test(String(email).toLowerCase())) {
+        setEmailDirty(true)
+    } else {
+        setEmailDirty(false)
+    }
+}
+
+const passwordHandler = (e) => {
+    setPassword(e.target.value)
+    if (e.target.value.length < 6 || e.target.value.length > 24) {
+        setPasswordDirty(true)
+    } else {
+        setPasswordDirty(false)
+    }
+}
 
   const handleLogin = () => {
     const auth = getAuth();
@@ -73,7 +114,8 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              color={emailDirty ? 'error' : 'primary'}
+              onChange={e => emailHandler(e)}
             />
             <TextField
               margin="normal"
@@ -85,7 +127,8 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              color={passwordDirty ? 'error' : 'primary'}
+              onChange={e => passwordHandler(e)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -96,6 +139,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!formValid}
             >
               Sign In
             </Button>
