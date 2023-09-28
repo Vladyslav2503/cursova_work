@@ -15,12 +15,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from 'store/slices/userSlice';
+import { Alert } from '@mui/material';
 
 const defaultTheme = createTheme();
 
-    
 
-    
+
+
 
 
 
@@ -35,35 +36,37 @@ export default function SignIn() {
   const [emailDirty, setEmailDirty] = useState(false)
   const [passwordDirty, setPasswordDirty] = useState(false)
   const [formValid, setFormValid] = useState(false)
-  
+  const [error, setError] = useState('');
+
+
 
   useEffect(() => {
     if (emailDirty || passwordDirty) {
-        setFormValid(false)
+      setFormValid(false)
     } else {
-        setFormValid(true)
+      setFormValid(true)
     }
-}, [emailDirty, passwordDirty])
+  }, [emailDirty, passwordDirty])
 
-const emailHandler = (e) => {
+  const emailHandler = (e) => {
     setEmail(e.target.value)
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     if (!re.test(String(email).toLowerCase())) {
-        setEmailDirty(true)
+      setEmailDirty(true)
     } else {
-        setEmailDirty(false)
+      setEmailDirty(false)
     }
-}
+  }
 
-const passwordHandler = (e) => {
+  const passwordHandler = (e) => {
     setPassword(e.target.value)
     if (e.target.value.length < 6 || e.target.value.length > 24) {
-        setPasswordDirty(true)
+      setPasswordDirty(true)
     } else {
-        setPasswordDirty(false)
+      setPasswordDirty(false)
     }
-}
+  }
 
   const handleLogin = () => {
     const auth = getAuth();
@@ -79,7 +82,9 @@ const passwordHandler = (e) => {
         );
         push('/');
       })
-      .catch(() => alert('Invalid user!'));
+      .catch(() => {
+        setError('Неправильний логін або пароль');
+      });
   };
 
   const handleSubmit = (event) => {
@@ -134,6 +139,12 @@ const passwordHandler = (e) => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+
+            {error && ( // Відобразіть Alert, коли є помилка
+              <Alert severity="error">
+                {error}
+              </Alert>
+            )}
             <Button
               type="submit"
               fullWidth
