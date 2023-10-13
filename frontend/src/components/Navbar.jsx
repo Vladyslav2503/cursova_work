@@ -166,7 +166,7 @@ export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">    
-        <Toolbar>
+        <Toolbar style={{backgroundColor: "#FF2625"}}>
           <IconButton
             size="large"
             edge="start"
@@ -182,7 +182,7 @@ export default function Navbar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            GYM
+            FlexFlow
           </Typography>
           <Search>
             <SearchIconWrapper>
