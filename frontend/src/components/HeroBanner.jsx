@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import SendIcon from '@mui/icons-material/Send';
-
-import HeroBannerImage from '../assets/images/banner.png';
+import GroupsIcon from '@mui/icons-material/Groups';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import imageSrc from '../assets/images/image_3.jpg'
-import imageSrcс from '../assets/images/image_2.png'
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import ShowerIcon from '@mui/icons-material/Shower';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 
+const carders = [
+  {
+    icon: <FitnessCenterIcon style={{ fontSize: "60px" }} />,
+    mainText: "QUALITY EQUIPMENT",
+    secondText: "Flex Flow Gym is equipped with the best equipment"
+  },
+  {
+    icon: <FactCheckIcon style={{ fontSize: "60px" }} />,
+    mainText: "HEALTHY EATING PLAN",
+    secondText: "We will make an individual meal plan for you"
+  },
+  {
+    icon: <ShowerIcon style={{ fontSize: "60px" }} />,
+    mainText: "SHOWER EQUIPMENT",
+    secondText: "What you need after an active workout"
+  },
+  {
+    icon: <MonitorHeartIcon style={{ fontSize: "60px" }} />,
+    mainText: "INDIVIDUAL APPROACH",
+    secondText: "Attention to your needs"
+  }
+];
 
 const cards = [{
   info: "YEAR + TRAINER",
@@ -55,7 +75,12 @@ const cards = [{
 }];
 
 
+
 const HeroBanner = () => {
+
+  const [hovered, setHovered] = useState(false);
+  const [hovered1, setHovered1] = useState(false);
+  const [hovered2, setHovered2] = useState(false);
   return (
 
     <main>
@@ -160,18 +185,247 @@ const HeroBanner = () => {
                     </ListItem>
                   </List>
                 </CardContent>
-                <Button style={{background: '#FF2625', color: "#fff"}} endIcon={<SendIcon />}>
+                <Button style={{ background: '#FF2625', color: "#fff" }} endIcon={<SendIcon />}>
                   Pay
                 </Button>
               </Card>
             </Grid>
-          ))}  
+          ))}
         </Grid>
-        
       </Container>
+      <Grid marginTop={"100px"} marginBottom={"100px"} container >
+        <Grid item xs={12} sm={4} >
+          <Card
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+            }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <CardMedia
+              component="div"
+              sx={{
+                height: '500px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                position: 'relative',
+              }}
+              image="https://pridegym.com.ua/wp-content/uploads/2020/01/info-box-img-1.jpg"
+            >
+              <Container
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  transition: 'opacity 0.5s', // Додаємо перехід для властивості opacity
+                }}
+              >
+                <GroupsIcon sx={{ fontSize: '70px', color: '#fff', opacity: hovered ? 1 : 1, transition: "all 1s ease-out" }} />
+                <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2, opacity: hovered ? 1 : 1, transition: "all 1s ease-out" }}>
+                  Strength training
+                </Typography>
+                <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2, opacity: hovered ? 1 : 0, transition: "all 1s ease-out" }}>
+                  Improve your body strength. Join our individual training sessions and quickly get in shape.
+                </Typography>
+
+              </Container>
+            </CardMedia>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <Card
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+            }}
+            onMouseEnter={() => setHovered1(true)}
+            onMouseLeave={() => setHovered1(false)}
+          >
+            <CardMedia
+              component="div"
+              sx={{
+                height: '500px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                position: 'relative',
+              }}
+              image="https://pridegym.com.ua/wp-content/uploads/2020/03/info-box-img-2-1.jpg"
+            >
+              <Container
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  transition: 'opacity 0.5s', // Додаємо перехід для властивості opacity
+                }}
+              >
+                <FitnessCenterIcon sx={{ fontSize: '70px', color: '#fff', opacity: hovered1 ? 1 : 1, transition: "all 1s ease-out" }} />
+                <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2, opacity: hovered1 ? 1 : 1, transition: "all 1s ease-out" }}>
+                  PERSONAL TRAINER
+                </Typography>
+                <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2, opacity: hovered1 ? 1 : 0, transition: "all 1s ease-out" }}>
+                  Stay motivated. Our personal trainers will help you choose the perfect workout.
+                </Typography>
+
+              </Container>
+            </CardMedia>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <Card
+            sx={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+            }}
+            onMouseEnter={() => setHovered2(true)}
+            onMouseLeave={() => setHovered2(false)}
+          >
+            <CardMedia
+              component="div"
+              sx={{
+                height: '500px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                position: 'relative',
+              }}
+              image="https://pridegym.com.ua/wp-content/uploads/2020/03/info-box-img-3-1.jpg"
+            >
+              <Container
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                <SportsGymnasticsIcon sx={{ fontSize: '70px', color: '#fff', opacity: hovered2 ? 1 : 1, transition: "all 1s ease-out" }} />
+                <Typography variant="h5" component="div" sx={{ marginTop: "300px", color: 'white', mt: 2, opacity: hovered2 ? 1 : 1, transition: "all 1s ease-out" }}>
+                  CARDIO TRAINING
+                </Typography>
+                <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2, opacity: hovered2 ? 1 : 0, transition: "all 1s ease-out" }}>
+                  Get your best body. Our trainers will build your perfect cardio workout.
+                </Typography>
+              </Container>
+            </CardMedia>
+          </Card>
+        </Grid>
+      </Grid>
+      <Box
+        sx={{
+          pt: 8,
+          pb: 6,
+          backgroundColor: "#010101"
+        }}
+      >
+        <Container maxWidth="sm">
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="#fff"
+            gutterBottom
+          >
+            SET HIGH GOALS!
+          </Typography>
+          <Typography variant="h5" align="center" color="#fff" paragraph>
+            Once you start training, we'll make sure you get the best fitness program. Our experts and the latest sports equipment are a winning combination.
+          </Typography>
+
+        </Container>
+      </Box>
+      <Box
+        sx={{
+          pt: 8,
+          pb: 6,
+          pl: 18,
+          pr: 18,
+          backgroundColor: "#010101"
+        }}
+      >
+        <Container sx={{ backgroundColor: "#010101", py: 8 }} >
+          {/* End hero unit */}
+          <Grid container spacing={6}>
+            {carders.map((carder) => (
+              <Grid item key={carder} xs={12} sm={6} md={3}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: "center", color: "#fff", bgcolor: "#010101" }}
+                >
+
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography display={"flex"} justifyContent={"center"} paddingBottom={"30px"}>
+                      {carder.icon}
+                    </Typography>
+                    <Typography display={"flex"} justifyContent={"center"} paddingBottom={"20px"} >
+                      {carder.mainText}
+                    </Typography>
+                    <Typography display={"flex"} justifyContent={"center"} align={"center"}>
+                      {carder.secondText}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
     </main>
 
   );
 };
 
 export default HeroBanner;
+
+{/*
+<Card
+sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+
+>
+<CardMedia
+  component="div"
+  sx={{
+    // 16:9
+
+    height: "500px",
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+
+  }}
+  image="https://source.unsplash.com/random?wallpapers"
+>
+  <Container
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+
+    }}
+  >
+    <GroupsIcon sx={{ fontSize: '70px', color: '#fff' }} />
+    <Typography variant="h5" component="div" sx={{ color: 'white', mt: 2 }}>
+      Силові тренування
+    </Typography>
+  </Container>
+</CardMedia>
+</Card>*/}
