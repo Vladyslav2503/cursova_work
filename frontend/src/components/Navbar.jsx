@@ -18,6 +18,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useDispatch } from 'react-redux';
 import { useAuth } from 'hooks/use-auth';
 import { removeUser } from 'store/slices/userSlice';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -64,7 +67,7 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const dispatch = useDispatch();
-  const {isAuth, email} = useAuth();
+  const { isAuth, email } = useAuth();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -89,6 +92,8 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -112,6 +117,10 @@ export default function Navbar() {
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
+
+
+
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -165,8 +174,8 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">    
-        <Toolbar style={{backgroundColor: "#010101"}}>
+      <AppBar position="fixed">
+        <Toolbar style={{ backgroundColor: "#010101" }}>
           <IconButton
             size="large"
             edge="start"
@@ -176,14 +185,17 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            FlexFlow
-          </Typography>
+
+          <Link to="/" style={{textDecoration: "none", color: "#fff"}}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              FlexFlow
+            </Typography>
+          </Link>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -195,20 +207,22 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={1} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 1 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={1} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Link to="/cart">
+              <IconButton size="large" color="inherit">
+                <Badge badgeContent={0} color="error">
+                  <ShoppingCartOutlinedIcon style={{ color: "#fff" }} />
+                </Badge>
+              </IconButton>
+            </Link>
+            <Link to="/shop">
+              <IconButton
+                size="large"
+                aria-label="show 1 new notifications"
+                color="inherit"
+              >
+                <ShoppingBasketOutlinedIcon style={{ color: "#fff" }} />
+              </IconButton>
+            </Link>
             <IconButton
               size="large"
               edge="end"
