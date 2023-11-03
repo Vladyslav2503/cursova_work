@@ -34,10 +34,10 @@ export const PRODUCTS = [
         price: 140.0,
         productImage: product14,
     },
-    {
+    /*{
         id: 4,
         productName: "BCAA ZERO CUCUMBER-LIME",
         price: 410.0,
         productImage: product15,
-    }
+    }*/
 ];

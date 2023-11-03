@@ -3,6 +3,7 @@ import { PRODUCTS } from "../products";
 
 export const ShopContext = createContext(null);
 
+
 const getDefaultCart = () => {
   let cart = {};
   for (let i = 1; i < PRODUCTS.length + 1; i++) {
@@ -14,6 +15,7 @@ const getDefaultCart = () => {
 export const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
 
+
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
@@ -24,6 +26,7 @@ export const ShopContextProvider = (props) => {
     }
     return totalAmount;
   };
+
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));

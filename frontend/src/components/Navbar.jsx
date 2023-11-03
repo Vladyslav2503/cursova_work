@@ -20,6 +20,7 @@ import { useAuth } from 'hooks/use-auth';
 import { removeUser } from 'store/slices/userSlice';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
+import ChatIcon from '@mui/icons-material/Chat';
 import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -137,26 +138,36 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={1} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 1 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={1} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      <Link style={{ textDecoration: "none", color: "#000" }} to="/chat">
+        <MenuItem>
+          <IconButton
+            size="large"
+            color="inherit"
+          >
+            <ShoppingBasketOutlinedIcon />
+          </IconButton>
+          <p>Chat</p>
+        </MenuItem>
+      </Link>
+      <Link style={{ textDecoration: "none", color: "#000" }} to="/cart">
+        <MenuItem>
+          <IconButton size="large" color="inherit">
+            <ShoppingCartOutlinedIcon />
+          </IconButton>
+          <p>Cart</p>
+        </MenuItem>
+      </Link>
+      <Link style={{ textDecoration: "none", color: "#000" }} to="/shop">
+        <MenuItem>
+          <IconButton
+            size="large"
+            color="inherit"
+          >
+            <ShoppingBasketOutlinedIcon />
+          </IconButton>
+          <p>Shop</p>
+        </MenuItem>
+      </Link>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -186,7 +197,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Link to="/" style={{textDecoration: "none", color: "#fff"}}>
+          <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
             <Typography
               variant="h6"
               noWrap
@@ -207,6 +218,13 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Link to="/chat">
+              <IconButton size="large" color="inherit">
+                <Badge badgeContent={0} color="error">
+                  <ChatIcon style={{ color: "#fff" }} />
+                </Badge>
+              </IconButton>
+            </Link>
             <Link to="/cart">
               <IconButton size="large" color="inherit">
                 <Badge badgeContent={0} color="error">
