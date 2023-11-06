@@ -4,39 +4,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-import { PRODUCTS } from "../../products";
 import { CartItemCheckout } from './CartItemCheckout';
 import { ShopContext } from 'context/Shop-context';
 import { CartItem } from 'pages/cartPage/Cart-item';
 import { useContext } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
-
-const products = [
-    {
-        name: 'Product 1',
-        desc: 'A nice thing',
-        price: '$9.99',
-    },
-    {
-        name: 'Product 2',
-        desc: 'Another thing',
-        price: '$3.45',
-    },
-    {
-        name: 'Product 3',
-        desc: 'Something else',
-        price: '$6.51',
-    },
-    {
-        name: 'Product 4',
-        desc: 'Best thing of all',
-        price: '$14.11',
-    },
-    { name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 
 
@@ -46,21 +22,28 @@ const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
     }
 })}*/
 
-export default function Review({oneName, twoName, cardNumber, cardDate, cardName, address, sity, region, zip, country}) {
+export default function Review({ oneName, twoName, cardNumber, cardDate, cardName, address, sity, region, zip, country }) {
+
+    const [todos, setTodos] = useState([])
+    useEffect(() => {
+        axios.get('http://localhost:3001/get')
+            .then(result => setTodos(result.data))
+            .catch(err => console.log(err))
+    }, [])
 
     const addresses = [address, sity, region, zip, country];
 
     const payments = [
-        { name: 'Card type', detail: cardName},
-        { name: 'Card holder', detail: `Mr. ${twoName}`},
+        { name: 'Card type', detail: cardName },
+        { name: 'Card holder', detail: `Mr. ${twoName}` },
         { name: 'Card number', detail: cardNumber },
         { name: 'Expiry date', detail: cardDate },
     ];
 
-    const { cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount} =
+    const { cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount } =
         useContext(ShopContext);
 
-        const totalAmount = getTotalCartAmount();
+    const totalAmount = getTotalCartAmount();
 
     return (
         <React.Fragment>
@@ -70,29 +53,32 @@ export default function Review({oneName, twoName, cardNumber, cardDate, cardName
             </Typography>
 
             <List disablePadding>
-                {PRODUCTS.map((product) => {
-                      if (cartItems[product.id] !== 0) {
-                    return (
-                        
-                        <div className="cartItem" style={{width: "450px"}}>
-                            <img src={product.productImage} />
-                            <div className="description">
-                                <p>
-                                    <b>{product.productName}</b>
-                                </p>
-                                <p> Price: ${product.price}</p>
-                                <div className="countHandler">
-                                    <button onClick={() => removeFromCart(product.id)}> - </button>
-                                    <input
-                                        value={cartItems[product.id]}
-                                        onChange={(e) => updateCartItemCount(Number(e.target.value), product.id)}
-                                    />
-                                    <button onClick={() => addToCart(product.id)}> + </button>
+                {Object.keys(cartItems).map((itemId) => {
+                    const product = todos.find((item) => item.id === Number(itemId));
+                    if (product && cartItems[itemId] !== 0) {
+                        return (
+                            <div className="cartItem" style={{ width: "450px" }} key={itemId}>
+                                {product.imagePath && (
+                                    <img src={`http://localhost:3001/static/${product.imagePath}`} alt={`Image for ${product.task}`} />
+                                )}
+                                <div className="description">
+                                    <p>
+                                        <b>{product.task}</b>
+                                    </p>
+                                    <p> Price: ${product.price}</p>
+                                    <div className="countHandler">
+                                        <button onClick={() => removeFromCart(product.id)}> - </button>
+                                        <input
+                                            value={cartItems[product.id]}
+                                            onChange={(e) => updateCartItemCount(Number(e.target.value), product.id)}
+                                        />
+                                        <button onClick={() => addToCart(product.id)}> + </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        )
+                        );
                     }
+                    return null;
                 })}
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />

@@ -68,6 +68,21 @@ export default function SignIn() {
     }
   }
 
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem('email'); // Використовуйте localStorage, якщо ви хочете, щоб вхід залишався після закриття браузера
+    const storedPassword = sessionStorage.getItem('password');
+
+    if (storedEmail && storedPassword) {
+      setEmail(storedEmail);
+      setPassword(storedPassword);
+    }
+  }, []); // Порожній масив залежностей означає, що цей ефект виконується лише під час завантаження компонента
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Зупинити стандартну обробку події форми
+    handleLogin();
+  };
+
   const handleLogin = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
@@ -80,16 +95,17 @@ export default function SignIn() {
             token: user.accessToken,
           })
         );
-        push('/');
+
+        // Зберегти облікові дані користувача в sessionStorage (або localStorage)
+        sessionStorage.setItem('email', email);
+        sessionStorage.setItem('password', password);
+
+        // Змінити шлях на "/"
+        push('/', { replace: true });
       })
       .catch(() => {
         setError('Неправильний логін або пароль');
       });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleLogin();
   };
 
   return (

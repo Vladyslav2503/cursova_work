@@ -15,7 +15,7 @@ import Todo from 'components/Todo';
 
 function App() {
   return (
-    <Box width="400px" sx={{ width: { xl: '1488px' } }} m="auto">
+    <Box width="400px" sx={{ width: "100%" }} m="auto">
       <ShopContextProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />

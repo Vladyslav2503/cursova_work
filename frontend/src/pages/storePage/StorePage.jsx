@@ -1,10 +1,20 @@
-import React from 'react'
-import { PRODUCTS } from "../../products";
+import React, { useEffect, useState } from 'react'
 import { Product } from "./product";
 import "./StorePage.css";
 import Navbar from 'components/Navbar';
+import axios from 'axios';
 
 const StorePage = () => {
+
+
+    const [todos, setTodos] = useState([])
+    useEffect(() => {
+        axios.get('http://localhost:3001/get')
+            .then(result => setTodos(result.data))
+            .catch(err => console.log(err))
+    }, [])
+
+
     return (
         <>
             <Navbar />
@@ -13,7 +23,7 @@ const StorePage = () => {
                     <h1>FlexFlow Shop</h1>
                 </div>
                 <div className="products">
-                    {PRODUCTS.map((product) => (
+                    {todos.map((product) => (
                         <Product data={product} />
                     ))}
                 </div>

@@ -83,7 +83,7 @@ const HeroBanner = () => {
   const [hovered2, setHovered2] = useState(false);
   return (
 
-    <main>
+    <main style={{padding: "0"}}>
       {/* Hero unit */}
       <Box
         sx={{
