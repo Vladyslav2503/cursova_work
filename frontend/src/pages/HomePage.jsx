@@ -11,10 +11,12 @@ const HomePage = () => {
     const {isAuth} = useAuth();
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
+    
     return isAuth ? (
         <Box>
             <Navbar/>     
             <HeroBanner/>     
+            {console.log( `auth ${isAuth}`)}
            {/* <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />       
             <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />*/}
         </Box>

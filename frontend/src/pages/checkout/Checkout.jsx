@@ -16,6 +16,8 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ShopContext } from 'context/Shop-context';
 
 function getRandomNumber() {
   // Генеруємо випадкове число в діапазоні від 10000 до 100000
@@ -74,6 +76,10 @@ export default function Checkout() {
   const [region, SetRegion] = useState('')
   const [zip, SetZip] = useState('')
   const [country, SetCountry] = useState('')
+
+  const {
+    checkout,
+  } = useContext(ShopContext);
 
   const handleOneNameChange = (newOneName) => {
     setOneName(newOneName);
@@ -164,7 +170,7 @@ export default function Checkout() {
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>
-              <Button style={{marginLeft: "150px"}} onClick={() => navigate("/")}> Continue </Button>
+              <Button style={{marginLeft: "150px"}} onClick={() => { checkout(); navigate("/");}}> Continue </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>

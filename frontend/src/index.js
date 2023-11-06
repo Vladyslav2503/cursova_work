@@ -6,8 +6,11 @@ import App from './App';
 import './index.css';
 import { store } from 'store';
 import './firabase'
+import { initApp } from 'store/slices/userSlice';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>

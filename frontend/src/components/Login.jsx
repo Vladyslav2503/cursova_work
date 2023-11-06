@@ -20,14 +20,6 @@ import { Alert } from '@mui/material';
 const defaultTheme = createTheme();
 
 
-
-
-
-
-
-
-
-
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -69,8 +61,8 @@ export default function SignIn() {
   }
 
   useEffect(() => {
-    const storedEmail = sessionStorage.getItem('email'); // Використовуйте localStorage, якщо ви хочете, щоб вхід залишався після закриття браузера
-    const storedPassword = sessionStorage.getItem('password');
+    const storedEmail = localStorage.getItem('email'); // Використовуйте localStorage, якщо ви хочете, щоб вхід залишався після закриття браузера
+    const storedPassword = localStorage.getItem('password');
 
     if (storedEmail && storedPassword) {
       setEmail(storedEmail);
@@ -97,8 +89,8 @@ export default function SignIn() {
         );
 
         // Зберегти облікові дані користувача в sessionStorage (або localStorage)
-        sessionStorage.setItem('email', email);
-        sessionStorage.setItem('password', password);
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
 
         // Змінити шлях на "/"
         push('/', { replace: true });
