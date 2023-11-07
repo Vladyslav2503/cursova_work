@@ -36,7 +36,6 @@ export const Cart = () => {
                         return null;
                     })}
                 </div>
-                {console.log(totalAmount)}
                 {totalAmount > 0 ? (
                     <div className="checkout">
                         <p> Subtotal: ${totalAmount} </p>

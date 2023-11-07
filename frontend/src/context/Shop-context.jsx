@@ -64,7 +64,6 @@ export const ShopContextProvider = (props) => {
           const itemInfo = state.todos.find((product) => product.id === Number(itemId));
           if (itemInfo) {
             const itemTotal = state.cartItems[itemId] * itemInfo.price;
-            console.log(`Item ID: ${itemId}, Price: ${itemInfo.price}, Quantity: ${state.cartItems[itemId]}, Total: ${itemTotal}`);
             totalAmount += itemTotal;
           } else {
             console.log(`Item ID: ${itemId} not found in todos`);

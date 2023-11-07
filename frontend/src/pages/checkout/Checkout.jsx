@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ShopContext } from 'context/Shop-context';
+import axios from 'axios';
 
 function getRandomNumber() {
   // Генеруємо випадкове число в діапазоні від 10000 до 100000
@@ -76,6 +77,35 @@ export default function Checkout() {
   const [region, SetRegion] = useState('')
   const [zip, SetZip] = useState('')
   const [country, SetCountry] = useState('')
+  const [id, setId] = useState(Date.now());
+
+
+
+  const handleAdd = () => {
+    const userData = {
+      id,
+      firstName: oneName,
+      lastName: twoName,
+      addressLine: address,
+      city: sity,
+      state: region,
+      zip,
+      country,
+      nameCard: cardName,
+      cardNumber,
+      expiryDate: cardDate,
+    };
+  
+    axios.post('http://localhost:3001/users', userData)
+      .then(response => {
+        console.log(response.data); // Додайте відповідний код обробки відповіді
+      })
+      .catch(error => {
+        console.error('Error adding user:', error);
+      });
+  };
+
+
 
   const {
     checkout,
@@ -170,7 +200,7 @@ export default function Checkout() {
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>
-              <Button style={{marginLeft: "150px"}} onClick={() => { checkout(); navigate("/");}}> Continue </Button>
+              <Button style={{marginLeft: "150px"}} onClick={() => { checkout(); navigate("/"); handleAdd()}}> Continue </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>

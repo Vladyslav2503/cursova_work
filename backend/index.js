@@ -4,7 +4,8 @@ const cors = require("cors");
 const { default: axios } = require("axios");
 const multer = require('multer');  
 const path = require('path');
-const TodoModel = require("./models/Todo")
+const TodoModel = require("./models/Todo");
+const UserModel = require("./models/Users");
 
 const app = express();
 app.use(express.json());
@@ -47,6 +48,55 @@ app.post('/add', upload.single('image'), (req, res) => {
   }).then(result => res.json(result))
   .catch(err => res.json(err))
 })
+
+app.get("/users/:id", (req, res) => {
+  const userId = req.params.id;
+  UserModel.findById(userId)
+      .then(user => {
+          if (!user) {
+              return res.status(404).json({ error: "User not found" });
+          }
+          res.json(user);
+      })
+      .catch(err => res.status(500).json({ error: err.message }));
+});
+
+// CREATE (add a new user)
+app.post("/users", (req, res) => {
+  const {
+    id,
+    firstName,
+    lastName,
+    addressLine,
+    city,
+    state,
+    zip,
+    country,
+    nameCard,
+    cardNumber,
+    expiryDate
+  } = req.body;
+
+  UserModel.create({
+    id,
+    firstName,
+    lastName,
+    addressLine,
+    city,
+    state,
+    zip,
+    country,
+    nameCard,
+    cardNumber,
+    expiryDate
+  }).then(result => res.json(result))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
+
+
+
 
 
 

@@ -55,12 +55,14 @@ export default function Review({ oneName, twoName, cardNumber, cardDate, cardNam
             <List disablePadding>
                 {Object.keys(cartItems).map((itemId) => {
                     const product = todos.find((item) => item.id === Number(itemId));
+                    
                     if (product && cartItems[itemId] !== 0) {
                         return (
                             <div className="cartItem" style={{ width: "450px" }} key={itemId}>
                                 {product.imagePath && (
                                     <img src={`http://localhost:3001/static/${product.imagePath}`} alt={`Image for ${product.task}`} />
                                 )}
+                                {console.log(JSON.stringify(product) + ' ffff')}
                                 <div className="description">
                                     <p>
                                         <b>{product.task}</b>

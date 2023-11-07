@@ -7,5 +7,6 @@ const TodoSchema = new mongoose.Schema({
     imagePath: String
 })
 
+
 const TodoModel = mongoose.model("todos", TodoSchema)
 module.exports = TodoModel
