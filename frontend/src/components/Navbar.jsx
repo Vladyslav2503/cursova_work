@@ -15,13 +15,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from 'hooks/use-auth';
 import { removeUser } from 'store/slices/userSlice';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import ChatIcon from '@mui/icons-material/Chat';
 import { Link, Navigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from 'firabase';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -86,6 +88,7 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
   const handleMenuCloseNoAll = () => {
+    signOut(auth)
     dispatch(removeUser())
   };
 
@@ -94,7 +97,9 @@ export default function Navbar() {
   };
 
   
+  const userEmail = useSelector((state) => state.user.email);
 
+  const storedEmail = localStorage.getItem('email');
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -113,14 +118,12 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Профіль {email}</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Профіль {storedEmail}</MenuItem>
       <MenuItem onClick={handleMenuCloseNoAll}>Вихід</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-
-
 
 
   const renderMobileMenu = (

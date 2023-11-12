@@ -13,9 +13,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from 'store/slices/userSlice';
 import { Alert } from '@mui/material';
+import {auth} from "../firabase"
 
 const defaultTheme = createTheme();
 
@@ -76,7 +77,7 @@ export default function SignIn() {
   };
 
   const handleLogin = () => {
-    const auth = getAuth();
+
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         console.log(user);
