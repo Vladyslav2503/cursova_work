@@ -6,21 +6,22 @@ import SearchExercises from 'components/SearchExercises';
 import { useState } from 'react';
 import Exercises from 'components/Exercises';
 import { Box } from '@mui/material';
+import Contact from 'components/Contact';
 const HomePage = () => {
 
     const {isAuth} = useAuth();
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
     
-    return isAuth ? (
+    return isAuth ?  (  
         <Box>
             <Navbar/>     
-            <HeroBanner/>     
-            {console.log( `auth ${isAuth}`)}
+            <HeroBanner/>
+            <Contact/>     
            {/* <SearchExercises setExercises={setExercises} bodyPart={bodyPart} setBodyPart={setBodyPart} />       
             <Exercises setExercises={setExercises} exercises={exercises} bodyPart={bodyPart} />*/}
         </Box>
-    ) : (
+    )  : (
         <Navigate to="/login" />
     )
 }

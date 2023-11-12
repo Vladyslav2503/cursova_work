@@ -30,7 +30,7 @@ export default function Review({ oneName, twoName, cardNumber, cardDate, cardNam
             .then(result => setTodos(result.data))
             .catch(err => console.log(err))
     }, [])
-
+    
     const addresses = [address, sity, region, zip, country];
 
     const payments = [
@@ -44,7 +44,7 @@ export default function Review({ oneName, twoName, cardNumber, cardDate, cardNam
         useContext(ShopContext);
 
     const totalAmount = getTotalCartAmount();
-
+    {console.log(JSON.stringify(todos) + ' ffff')}
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -62,7 +62,7 @@ export default function Review({ oneName, twoName, cardNumber, cardDate, cardNam
                                 {product.imagePath && (
                                     <img src={`http://localhost:3001/static/${product.imagePath}`} alt={`Image for ${product.task}`} />
                                 )}
-                                {console.log(JSON.stringify(product) + ' ffff')}
+                                
                                 <div className="description">
                                     <p>
                                         <b>{product.task}</b>
@@ -70,6 +70,7 @@ export default function Review({ oneName, twoName, cardNumber, cardDate, cardNam
                                     <p> Price: ${product.price}</p>
                                     <div className="countHandler">
                                         <button onClick={() => removeFromCart(product.id)}> - </button>
+                                        {console.log( cartItems[product.id])}
                                         <input
                                             value={cartItems[product.id]}
                                             onChange={(e) => updateCartItemCount(Number(e.target.value), product.id)}

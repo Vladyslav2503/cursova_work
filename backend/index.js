@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const TodoModel = require("./models/Todo");
 const UserModel = require("./models/Users");
+const FeedbackModel = require("./models/Orders");
 
 const app = express();
 app.use(express.json());
@@ -94,6 +95,22 @@ app.post("/users", (req, res) => {
 });
 
 
+app.post("/feedbacks", (req, res) => {
+  const {
+    id,
+    name,
+    number,
+    feedback,
+  } = req.body;
+
+  FeedbackModel.create({
+    id,
+    name,
+    number,
+    feedback,
+  }).then(result => res.json(result))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
 
 
 

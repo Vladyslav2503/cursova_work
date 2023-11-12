@@ -148,7 +148,7 @@ const HeroBanner = () => {
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  backgroundColor: "#29282d",
+                  backgroundColor: "black",
                   transition: 'transform 0.3s',
                   '&:hover': {
                     transform: 'scale(1.05)',
@@ -185,7 +185,7 @@ const HeroBanner = () => {
                     </ListItem>
                   </List>
                 </CardContent>
-                <Button style={{ background: '#FF2625', color: "#fff" }} endIcon={<SendIcon />}>
+                <Button style={{ background: '#29282d', color: "#fff" }} endIcon={<SendIcon />}>
                   Pay
                 </Button>
               </Card>
