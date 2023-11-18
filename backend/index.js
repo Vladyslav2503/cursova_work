@@ -7,6 +7,7 @@ const path = require('path');
 const TodoModel = require("./models/Todo");
 const UserModel = require("./models/Users");
 const FeedbackModel = require("./models/Orders");
+const ResponseModel = require("./models/Response");
 
 const app = express();
 app.use(express.json());
@@ -34,6 +35,12 @@ app.get("/get", (req, res) => {
     TodoModel.find()
     .then(result => res.json(result))
     .catch(err => res.json(err))
+})
+
+app.get("/reviews", (req, res) => {
+  ResponseModel.find()
+  .then(result => res.json(result))
+  .catch(err => res.json(err))
 })
 
 app.post('/add', upload.single('image'), (req, res) => {
@@ -108,6 +115,28 @@ app.post("/feedbacks", (req, res) => {
     name,
     number,
     feedback,
+  }).then(result => res.json(result))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
+app.post("/reviews", (req, res) => {
+  const {
+    id,
+    name,
+    description,
+    rating,
+  } = req.body;
+
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+
+  ResponseModel.create({
+    id,
+    name,
+    date: formattedDate,
+    description,
+    rating,
   }).then(result => res.json(result))
     .catch(err => res.status(500).json({ error: err.message }));
 });

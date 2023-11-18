@@ -24,6 +24,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { Link, Navigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from 'firabase';
+import ReviewsIcon from '@mui/icons-material/Reviews';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -96,7 +97,7 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  
+
   const userEmail = useSelector((state) => state.user.email);
 
   const storedEmail = localStorage.getItem('email');
@@ -222,6 +223,13 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Link to="/reviews">
+              <IconButton size="large" color="inherit">
+                <Badge badgeContent={0} color="error">
+                  <ReviewsIcon style={{ color: "#fff" }} />
+                </Badge>
+              </IconButton>
+            </Link>
             <Link to="/chat">
               <IconButton size="large" color="inherit">
                 <Badge badgeContent={0} color="error">

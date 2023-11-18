@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const StorePage = () => {
 
-
     const [todos, setTodos] = useState([])
     useEffect(() => {
         axios.get('http://localhost:3001/get')

@@ -37,6 +37,7 @@ export const Cart = () => {
                     })}
                 </div>
                 {totalAmount > 0 ? (
+                    
                     <div className="checkout">
                         <p> Subtotal: ${totalAmount} </p>
                         <div style={{ display: "flex", alignItems: "center" }}>
@@ -57,7 +58,10 @@ export const Cart = () => {
                         </div>
                     </div>
                 ) : (
-                    <h1>Cart is Empty</h1>
+                    <div className="emptyCar" >
+                        <h1 style={{marginBottom: "20px"}}>Cart is Empty</h1>
+                        <Link className="startShop" to={"/shop"} >Start shopping</Link>
+                    </div>
                 )}
             </div>
         </>

@@ -41,3 +41,25 @@
     margin: 10px;
     cursor: pointer;
   }
+
+  .emptyCar{
+    text-align: center;
+    margin-top: 200px;
+  }
+
+  .startShop{
+    background: #232323;
+    border: #fff 1px solid;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Source Sans Pro',sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 7px 15px;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-decoration: none;
+  }

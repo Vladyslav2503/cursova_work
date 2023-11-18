@@ -11,6 +11,7 @@ import { Cart } from 'pages/cartPage/Cart';
 import Checkout from 'pages/checkout/Checkout';
 import Main from 'chat/Main';
 import Todo from 'components/Todo';
+import Response from 'pages/reviews/Response';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/exercise/:id" element={<ExerciseDetail />} />
             <Route path="/chat" element={<Main />} />
             <Route path="/todo" element={<Todo/>} />
+            <Route path='/reviews' element={<Response/>} />
           </Routes>
       </ShopContextProvider>
     </Box>
