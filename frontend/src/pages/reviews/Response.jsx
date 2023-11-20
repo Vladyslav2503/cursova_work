@@ -73,10 +73,15 @@ const Response = () => {
 
         // Закриваємо модальне вікно
         handleModalClose();
+        setFeedback({
+            rating: 0,
+            name: "",
+            comment: ""
+        })
     };
 
     return (
-        <>
+        <div >
         <Navbar/>
             <div className='container'>
                 <h2>REVIEWS ABOUT THE WORK OF THE FLEX-FLOW STORE</h2>
@@ -92,12 +97,13 @@ const Response = () => {
 
             <Dialog open={isModalOpen} onClose={handleModalClose}>
                 <DialogTitle>Give Feedback</DialogTitle>
-                <DialogContent>
-                    <TextField label="Name" name="name" value={feedback.name} onChange={handleInputChange} fullWidth />
+                <DialogContent style={{width: "400px"}}>
+                    <TextField style={{marginTop: "10px"}} label="Name" name="name" value={feedback.name} onChange={handleInputChange} fullWidth />
                     <br />
-                    <TextField label="Comment" name="comment" value={feedback.comment} onChange={handleInputChange} fullWidth />
+                    <TextField style={{marginTop: "20px", marginBottom: "10px"}} label="Comment" name="comment" value={feedback.comment} onChange={handleInputChange} fullWidth />
                     <br />
-                    <Rating name="half-rating" value={feedback.rating} precision={0.5} onChange={(event, newValue) => handleRatingChange(newValue)} />
+                    <p style={{marginLeft: 130}} >Your rating</p>
+                    <Rating style={{marginLeft: 110, marginTop: 10 }} name="half-rating" value={feedback.rating} precision={0.5} onChange={(event, newValue) => handleRatingChange(newValue)} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleConfirmFeedback}>Confirm</Button>
@@ -108,7 +114,7 @@ const Response = () => {
             {response.map((responseItem, index) => (
                 <ResponseItem response={responseItem} key={index} />
             ))}
-        </>
+        </div>
     );
 };
 

@@ -143,6 +143,17 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <Link style={{ textDecoration: "none", color: "#000" }} to="/reviews">
+        <MenuItem>
+          <IconButton
+            size="large"
+            color="inherit"
+          >
+            <ReviewsIcon />
+          </IconButton>
+          <p>Reviews</p>
+        </MenuItem>
+      </Link>
       <Link style={{ textDecoration: "none", color: "#000" }} to="/chat">
         <MenuItem>
           <IconButton
