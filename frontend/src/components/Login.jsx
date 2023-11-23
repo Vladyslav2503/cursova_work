@@ -13,10 +13,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword} from 'firebase/auth';
-import { setUser, updateEmail, updateIsAuth } from 'store/slices/userSlice';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { setUser, updateEmail, updateIsAuth, updateUserRole } from 'store/slices/userSlice';
 import { Alert } from '@mui/material';
-import {auth} from "../firabase"
+import { auth } from "../firabase"
+import { jwtDecode } from "jwt-decode";
 
 const defaultTheme = createTheme();
 
@@ -43,13 +44,13 @@ export default function SignIn() {
 
   const emailHandler = (e) => {
     dispatch(updateEmail(e.target.value));
-   /* const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-    if (!re.test(String(email).toLowerCase())) {
-      setEmailDirty(true)
-    } else {
-      setEmailDirty(false)
-    }*/
+    /* const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+ 
+     if (!re.test(String(email).toLowerCase())) {
+       setEmailDirty(true)
+     } else {
+       setEmailDirty(false)
+     }*/
   }
 
   const passwordHandler = (e) => {
@@ -66,34 +67,39 @@ export default function SignIn() {
     event.preventDefault();
 
     const userData = {
-        username: email,
-        password: password,
+      username: email,
+      password: password,
     };
 
     try {
-        const response = await fetch('http://localhost:3001/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        });
+      const response = await fetch('http://localhost:3001/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
 
-        if (response.ok) {
-            const result = await response.json();
-            localStorage.setItem('token', result.token);
-            dispatch(updateIsAuth(true))
-            console.log("dispatch")
-            push('/');
-        } else {
-            if (response.status === 400) {
-                alert('Неправильний пароль');
-            }
+      if (response.ok) {
+        const result = await response.json();
+        localStorage.setItem('token', result.token);
+
+        const decodedToken = jwtDecode(result.token);
+        const userRole = decodedToken.roles[0];
+
+        dispatch(updateUserRole(userRole));
+        dispatch(updateIsAuth(true))
+        console.log("dispatch")
+        push('/');
+      } else {
+        if (response.status === 400) {
+          alert('Неправильний пароль');
         }
+      }
     } catch (error) {
-        console.error('Помилка при відправленні запиту:', error);
+      console.error('Помилка при відправленні запиту:', error);
     }
-};
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>

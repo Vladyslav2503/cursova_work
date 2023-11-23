@@ -10,7 +10,8 @@ export const Product = (props) => {
   return (
     <div className="product">
        {imagePath && (
-         <img src={`http://localhost:3001/static/${imagePath}`} alt={`Image for ${task}`} />
+         <img src={`http://localhost:3001/static/${imagePath}`} alt={`Image for ${task}`} style={{ marginTop: '20px', width: '400px', height: '400px', objectFit: 'contain' }} />
+
                             )}
       <div className="description">
         <p>

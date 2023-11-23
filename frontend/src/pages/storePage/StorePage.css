@@ -55,3 +55,26 @@
     color: white;
     cursor: pointer;
   }
+
+  .formAddGoods{
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+  }
+
+  .addButton {
+    max-width: 300px;
+    width: 100%;
+    background: #000;
+    border-radius: 0;
+    min-height: 50px;
+    color: #fff;
+    border: 1px solid #fff;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }

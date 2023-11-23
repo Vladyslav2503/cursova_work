@@ -20,6 +20,7 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import ChatIcon from '@mui/icons-material/Chat';
 import { Link, useNavigate } from 'react-router-dom';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,7 +67,7 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const dispatch = useDispatch();
-  const { email, search } = useSelector((state) => state.user);
+  const { email, search, userRole } = useSelector((state) => state.user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -242,6 +243,15 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          {userRole === 'ADMIN' && (
+          <Link to="/addgoods">
+              <IconButton size="large" color="inherit">
+                <Badge badgeContent={0} color="error">
+                  <AddCircleIcon style={{ color: "#fff" }} />
+                </Badge>
+              </IconButton>
+            </Link>
+          )}
             <Link to="/reviews">
               <IconButton size="large" color="inherit">
                 <Badge badgeContent={0} color="error">

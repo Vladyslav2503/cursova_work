@@ -12,13 +12,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 const HomePage = () => {
 
-    const { isAuth } = useSelector((state) => state.user);
+    const { isAuth, userRole} = useSelector((state) => state.user);
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
 
     useEffect(() => {
         window.localStorage.setItem('isAuth', isAuth);
-      }, [isAuth]);
+        window.localStorage.setItem('role', userRole);
+      }, [isAuth, userRole]);
     
 
 

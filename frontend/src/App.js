@@ -30,6 +30,7 @@ function App() {
             <Route path="/chat" element={<Main />} />
             <Route path="/todo" element={<Todo/>} />
             <Route path='/reviews' element={<Response/>} />
+            <Route path='/addgoods' element={<Todo/>} />
           </Routes>
       </ShopContextProvider>
     </Box>

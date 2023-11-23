@@ -40,6 +40,19 @@ app.get("/get", (req, res) => {
     .catch(err => res.json(err))
 })
 
+app.delete("/delete/:id", (req, res) => {
+  const todoId = req.params.id;
+
+  TodoModel.findByIdAndDelete(todoId)
+    .then(deletedTodo => {
+      if (!deletedTodo) {
+        return res.status(404).json({ error: "Todo not found" });
+      }
+      res.json({ message: "Todo deleted successfully", deletedTodo });
+    })
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
 app.get("/reviews", (req, res) => {
   ResponseModel.find()
   .then(result => res.json(result))
