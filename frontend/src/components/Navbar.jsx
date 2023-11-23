@@ -12,18 +12,13 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuth } from 'hooks/use-auth';
-import { removeUser } from 'store/slices/userSlice';
+import {updateIsAuth, updateSearch } from 'store/slices/userSlice';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import ChatIcon from '@mui/icons-material/Chat';
-import { Link, Navigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from 'firabase';
+import { Link, useNavigate } from 'react-router-dom';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 
 const Search = styled('div')(({ theme }) => ({
@@ -71,7 +66,7 @@ export default function Navbar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const dispatch = useDispatch();
-  const { isAuth, email } = useAuth();
+  const { email, search } = useSelector((state) => state.user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -88,19 +83,30 @@ export default function Navbar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-  const handleMenuCloseNoAll = () => {
-    signOut(auth)
-    dispatch(removeUser())
-  };
+ 
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const navigate = useNavigate()
 
-  const userEmail = useSelector((state) => state.user.email);
 
-  const storedEmail = localStorage.getItem('email');
+  const handleLogout = () => {
+    // Додайте код для виходу, наприклад, вивільнення токену або скидання інших даних авторизації
+    // Приклад:
+     localStorage.removeItem('token');
+    // або використовуйте функції для очищення стану аутентифікації в Redux
+    // dispatch(logoutAction());
+    window.localStorage.removeItem('isAuth');
+    // Після виходу перенаправте користувача на сторінку входу або іншу відповідну сторінку
+    dispatch(updateIsAuth(false))
+    navigate('/login');
+    
+    // Закрийте меню
+  };
+
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -119,8 +125,8 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Профіль {storedEmail}</MenuItem>
-      <MenuItem onClick={handleMenuCloseNoAll}>Вихід</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Профіль {email}</MenuItem>
+      <MenuItem onClick={handleLogout}>Вихід</MenuItem>
     </Menu>
   );
 
@@ -228,6 +234,8 @@ export default function Navbar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={(e) => dispatch(updateSearch(e.target.value))}
+              value={search}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />

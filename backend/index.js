@@ -4,6 +4,7 @@ const cors = require("cors");
 const { default: axios } = require("axios");
 const multer = require('multer');  
 const path = require('path');
+const authRouter = require('./authRouter')
 const TodoModel = require("./models/Todo");
 const UserModel = require("./models/Users");
 const FeedbackModel = require("./models/Orders");
@@ -12,7 +13,9 @@ const ResponseModel = require("./models/Response");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/auth", authRouter);
 app.use('/static', express.static(path.join(__dirname, './static')));
+
 
 
 

@@ -81,16 +81,16 @@ const Response = () => {
     };
 
     return (
-        <div >
+        <div style={{width: "100%", height: "100%", background: "#000"}} >
         <Navbar/>
             <div className='container'>
-                <h2>REVIEWS ABOUT THE WORK OF THE FLEX-FLOW STORE</h2>
+                <h2 style={{color: "#fff"}} >REVIEWS ABOUT THE WORK OF THE FLEX-FLOW GYM</h2>
             </div>
             <div className='reviews'>
                 <div className='response'>
-                    <p>POSITIVE {response.filter(item => item.rating > 2.5).length}</p>
-                    <p>ALL {response.length}</p>
-                    <p>NEGATIVE {response.filter(item => item.rating < 2.5).length}</p>
+                    <p style={{color: "#fff"}} >POSITIVE {response.filter(item => item.rating > 2.5).length}</p>
+                    <p style={{color: "#fff"}}>ALL {response.length}</p>
+                    <p style={{color: "#fff"}}>NEGATIVE {response.filter(item => item.rating <= 2.5).length}</p>
                 </div>
             </div>
             <button className='responseButton' onClick={handleModalOpen}>Give feedback</button>
@@ -106,8 +106,8 @@ const Response = () => {
                     <Rating style={{marginLeft: 110, marginTop: 10 }} name="half-rating" value={feedback.rating} precision={0.5} onChange={(event, newValue) => handleRatingChange(newValue)} />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleConfirmFeedback}>Confirm</Button>
-                    <Button onClick={handleModalClose}>Cancel</Button>
+                    <Button style={{color: "black"}} onClick={handleConfirmFeedback}>Confirm</Button>
+                    <Button style={{color: "black"}} onClick={handleModalClose}>Cancel</Button>
                 </DialogActions>
             </Dialog>
 

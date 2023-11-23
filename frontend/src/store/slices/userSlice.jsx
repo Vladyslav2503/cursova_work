@@ -2,27 +2,26 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     email: null,
-    token: null,
-    id: null,
+    isAuth: localStorage.getItem('isAuth') || false,
+    search: localStorage.getItem('search') || "",
 };
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser(state, action) {
-            state.email = action.payload.email;
-            state.token = action.payload.token;
-            state.id = action.payload.id;
+        updateIsAuth: (state, action) => {
+            state.isAuth = action.payload;
         },
-        removeUser(state) {
-            state.email = null;
-            state.token = null;
-            state.id = null;
+        updateEmail: (state, action) => {
+            state.email = action.payload;
+        },
+        updateSearch: (state, action) => {
+            state.search = action.payload;
         },
     },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const {updateIsAuth, updateEmail, updateSearch} = userSlice.actions;
 
 export default userSlice.reducer;

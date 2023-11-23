@@ -1,7 +1,7 @@
 .container{
    display: flex;
    justify-content: center;
-   margin-top: 80px;
+   margin-top: 65px;
 }
 
 .response {
@@ -23,7 +23,7 @@
     border-radius: 0;
     min-height: 50px;
     color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #fff;
     display: block;
     margin: auto;
     margin-top: 30px;
@@ -32,7 +32,6 @@
 
 .response-cart-all{
     margin-top: 20px;
-    margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
@@ -40,15 +39,17 @@
 .response-cart{
     width: 600px;
     height: 85px;
-    border: 1px solid #000;
+    border: 1px solid #fff;
     margin-left: 30px;
     padding: 15px;
 }
 
 .name {
     margin-top: 30px;
+    color: #fff;
 }
 
 .rating {
     margin-left: 10px;
+    color: #fff
 }

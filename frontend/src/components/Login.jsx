@@ -11,10 +11,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from 'store/slices/userSlice';
+import { signInWithEmailAndPassword} from 'firebase/auth';
+import { setUser, updateEmail, updateIsAuth } from 'store/slices/userSlice';
 import { Alert } from '@mui/material';
 import {auth} from "../firabase"
 
@@ -22,7 +22,7 @@ const defaultTheme = createTheme();
 
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
+  const { email } = useSelector((state) => state.user);
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const push = useNavigate();
@@ -42,64 +42,58 @@ export default function SignIn() {
   }, [emailDirty, passwordDirty])
 
   const emailHandler = (e) => {
-    setEmail(e.target.value)
-    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    dispatch(updateEmail(e.target.value));
+   /* const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     if (!re.test(String(email).toLowerCase())) {
       setEmailDirty(true)
     } else {
       setEmailDirty(false)
-    }
+    }*/
   }
 
   const passwordHandler = (e) => {
     setPassword(e.target.value)
-    if (e.target.value.length < 6 || e.target.value.length > 24) {
+    if (e.target.value.length < 3 || e.target.value.length > 24) {
       setPasswordDirty(true)
     } else {
       setPasswordDirty(false)
     }
   }
 
-  useEffect(() => {
-    const storedEmail = localStorage.getItem('email'); // Використовуйте localStorage, якщо ви хочете, щоб вхід залишався після закриття браузера
-    const storedPassword = localStorage.getItem('password');
 
-    if (storedEmail && storedPassword) {
-      setEmail(storedEmail);
-      setPassword(storedPassword);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const userData = {
+        username: email,
+        password: password,
+    };
+
+    try {
+        const response = await fetch('http://localhost:3001/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            localStorage.setItem('token', result.token);
+            dispatch(updateIsAuth(true))
+            console.log("dispatch")
+            push('/');
+        } else {
+            if (response.status === 400) {
+                alert('Неправильний пароль');
+            }
+        }
+    } catch (error) {
+        console.error('Помилка при відправленні запиту:', error);
     }
-  }, []); // Порожній масив залежностей означає, що цей ефект виконується лише під час завантаження компонента
-
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Зупинити стандартну обробку події форми
-    handleLogin();
-  };
-
-  const handleLogin = () => {
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        console.log(user);
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accessToken,
-          })
-        );
-
-        // Зберегти облікові дані користувача в sessionStorage (або localStorage)
-        localStorage.setItem('email', email);
-        localStorage.setItem('password', password);
-
-        // Змінити шлях на "/"
-        push('/', { replace: true });
-      })
-      .catch(() => {
-        setError('Неправильний логін або пароль');
-      });
-  };
+};
 
   return (
     <ThemeProvider theme={defaultTheme}>

@@ -9,28 +9,22 @@ import { Box } from '@mui/material';
 import Contact from 'components/Contact';
 import { auth } from 'firabase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const HomePage = () => {
 
-    const [user, setUser] = useState(true)
-    const {isAuth} = useAuth();
+    const { isAuth } = useSelector((state) => state.user);
     const [exercises, setExercises] = useState([]);
     const [bodyPart, setBodyPart] = useState('all');
 
-    const dispatch = useDispatch();
-
-    const handleOnAuthStateChange = (user) => {
-        debugger
-        setUser(user || null)
-        window.auth = user
-    }
-
     useEffect(() => {
-        const sub = onAuthStateChanged(auth, handleOnAuthStateChange)
-        return sub
-    }, [])
+        window.localStorage.setItem('isAuth', isAuth);
+      }, [isAuth]);
     
-    return user ?  (  
+
+
+    
+    
+    return isAuth ?  (  
         <Box>
             <Navbar/>     
             <HeroBanner/>

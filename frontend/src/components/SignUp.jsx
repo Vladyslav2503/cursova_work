@@ -9,16 +9,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { setUser } from 'store/slices/userSlice';
+import { setUser, updateEmail, updateIsAuth } from 'store/slices/userSlice';
 
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [email, setEmail] = useState('');
+  const { email } = useSelector((state) => state.user);
   const [password, setPassword] = useState('');
   const [emailDirty, setEmailDirty] = useState(false)
   const [passwordDirty, setPasswordDirty] = useState(false)
@@ -35,46 +34,55 @@ export default function SignUp() {
 },[emailDirty, passwordDirty])
 
 const emailHandler = (e) => {
-    setEmail(e.target.value)
-    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  dispatch(updateEmail(e.target.value));
+    /*const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     
     if (!re.test(String(email).toLowerCase())) {
         setEmailDirty(true)
     } else {
         setEmailDirty(false)
-    }
+    }*/
 }
 
 const passwordHandler = (e) => {
     setPassword(e.target.value)
-    if(e.target.value.length < 6 || e.target.value.length > 24){
+    if(e.target.value.length < 3 || e.target.value.length > 24){
         setPasswordDirty(true)
     } else {
         setPasswordDirty(false)
     }
 }
 
-  const handleRegister = () => {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        console.log(user);
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accessToken,
-          })
-        );
-        push('/');
-      })
-      .catch(console.error);
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const userData = {
+      username: email,
+      password: password,
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleRegister();
-  };
+  try {
+      const response = await fetch('http://localhost:3001/auth/registration', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+          const result = await response.json();
+          localStorage.setItem('token', result.token);
+          dispatch(updateIsAuth(true))
+          push('/');
+      } else {
+          console.error('Помилка реєстрації:', response.status);
+          alert('Помилка реєстрації. Перевірте введені дані.');
+      }
+  } catch (error) {
+      console.error('Помилка при відправленні запиту:', error);
+  }
+};
 
   return (
     <ThemeProvider theme={defaultTheme}>
