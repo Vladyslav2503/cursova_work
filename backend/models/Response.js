@@ -4,7 +4,8 @@ const ResponseSchema = new mongoose.Schema({
     name: String,
     date: String,
     description: String,
-    rating: Number
+    rating: Number,
+    feedback: String
 })
 
 

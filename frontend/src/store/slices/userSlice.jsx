@@ -5,6 +5,7 @@ const initialState = {
     isAuth: localStorage.getItem('isAuth') || false,
     search: localStorage.getItem('search') || "",
     userRole: localStorage.getItem('role') || "USER",
+    adminResponse: ""
 };
 
 const userSlice = createSlice({
@@ -23,9 +24,12 @@ const userSlice = createSlice({
         updateUserRole: (state, action) => {
             state.userRole = action.payload;
         },
+        updateAdminResponse: (state, action) => {
+            state.adminResponse = action.payload;
+        },
     },
 });
 
-export const {updateIsAuth, updateEmail, updateSearch, updateUserRole} = userSlice.actions;
+export const {updateIsAuth, updateEmail, updateSearch, updateUserRole, updateAdminResponse} = userSlice.actions;
 
 export default userSlice.reducer;

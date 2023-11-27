@@ -2,6 +2,7 @@
    display: flex;
    justify-content: center;
    margin-top: 65px;
+   width: 100%;
 }
 
 .response {
@@ -30,26 +31,44 @@
     margin-bottom: 20px;
 }
 
-.response-cart-all{
-    margin-top: 20px;
+.response-cart-all {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Змініть на center, якщо хочете вирівняти по центру */
+    margin-top: 20px;
 }
 
-.response-cart{
+.response-cart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 600px;
+    height: 85px;
+    border: 1px solid #fff;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.name {
+    color: #fff;
+    text-align: center;
+    flex-grow: 1;
+    margin-right: 550px; /* відстань між іменем і .response-cart */
+}
+
+.rating {
+    margin-top: 5px;
+    margin-left: 490px;
+    color: #fff;
+}
+
+.thank-you-message{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 600px;
     height: 85px;
     border: 1px solid #fff;
     margin-left: 30px;
     padding: 15px;
-}
-
-.name {
-    margin-top: 30px;
-    color: #fff;
-}
-
-.rating {
-    margin-left: 10px;
-    color: #fff
 }

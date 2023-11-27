@@ -53,11 +53,6 @@ app.delete("/delete/:id", (req, res) => {
     .catch(err => res.status(500).json({ error: err.message }));
 });
 
-app.get("/reviews", (req, res) => {
-  ResponseModel.find()
-  .then(result => res.json(result))
-  .catch(err => res.json(err))
-})
 
 app.post('/add', upload.single('image'), (req, res) => {
   const id = req.body.id;
@@ -135,6 +130,11 @@ app.post("/feedbacks", (req, res) => {
     .catch(err => res.status(500).json({ error: err.message }));
 });
 
+app.get("/reviews", (req, res) => {
+  ResponseModel.find()
+  .then(result => res.json(result))
+  .catch(err => res.json(err))
+})
 
 app.post("/reviews", (req, res) => {
   const {
@@ -142,6 +142,7 @@ app.post("/reviews", (req, res) => {
     name,
     description,
     rating,
+    feedback
   } = req.body;
 
   const currentDate = new Date();
@@ -153,7 +154,24 @@ app.post("/reviews", (req, res) => {
     date: formattedDate,
     description,
     rating,
+    feedback
   }).then(result => res.json(result))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
+
+app.put("/reviews/:id", (req, res) => {
+  const id = req.params.id;
+  const { feedback } = req.body;
+
+  ResponseModel.findByIdAndUpdate(id, { feedback }, { new: true })
+    .then(result => {
+      if (!result) {
+        return res.status(404).json({ error: 'Record not found' });
+      }
+      res.json(result);
+    })
     .catch(err => res.status(500).json({ error: err.message }));
 });
 
