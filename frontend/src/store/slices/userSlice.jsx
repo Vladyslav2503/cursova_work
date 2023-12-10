@@ -7,7 +7,7 @@ const initialState = {
     userRole: localStorage.getItem('role') || "USER",
     adminResponse: ""
 };
-
+   
 const userSlice = createSlice({
     name: 'user',
     initialState,
